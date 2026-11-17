@@ -1,0 +1,29 @@
+meta {
+  name: Object on v1.1
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{baseUrl}}/v1.1/objects/:objectId
+  body: none
+  auth: none
+}
+
+params:path {
+  objectId: 45734
+}
+
+assert {
+  res.status: eq 404
+}
+
+docs {
+  Only search moved to `v1.1`. The same id that answers on `v1` is a 404
+  here, which is why the version is written per endpoint in
+  `collection_remote_repository.dart` and not once in the base URL.
+
+  Moving the object request to `v1.1` would not show an error: the app
+  takes a 404 on an object to mean "nothing to show", so every search
+  would end in "Nothing to show yet".
+}

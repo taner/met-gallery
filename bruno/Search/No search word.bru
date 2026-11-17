@@ -1,0 +1,31 @@
+meta {
+  name: No search word
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{baseUrl}}/v1.1/search?hasImages=true&offset=0&limit=12
+  body: none
+  auth: none
+}
+
+params:query {
+  hasImages: true
+  offset: 0
+  limit: 12
+}
+
+assert {
+  res.status: eq 200
+  res.body.total: gt 100000
+  res.body.objectIDs: length 12
+}
+
+docs {
+  What the app sends when the search field is empty (a starting point
+  let go, or the field cleared): no `q` at all. The answer is every work
+  with a photograph, in id order.
+
+  `v1.1` allows this. The retired `v1` search required `q`.
+}

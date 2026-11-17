@@ -1,0 +1,37 @@
+meta {
+  name: Image with HEAD
+  type: http
+  seq: 2
+}
+
+head {
+  url: {{imagesUrl}}/as/web-large/DP251139.jpg
+  body: none
+  auth: none
+}
+
+headers {
+  Origin: http://localhost:8103
+}
+
+assert {
+  res.status: eq 200
+}
+
+tests {
+  test("a HEAD does carry Access-Control-Allow-Origin", function () {
+    expect(res.getHeader("access-control-allow-origin")).to.equal("*");
+  });
+}
+
+docs {
+  The same picture, asked about with `HEAD`.
+
+  This one answers `Access-Control-Allow-Origin: *`. It comes from the
+  origin server (`server: Microsoft-IIS`), while a `GET` is answered by
+  the CDN in front of it, without the header.
+
+  It is the trap in checking this with `curl -I`: the header is there,
+  and the request a browser actually makes to load the image does not
+  get it.
+}

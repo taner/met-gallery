@@ -1,0 +1,35 @@
+meta {
+  name: Search for a word
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/v1.1/search?hasImages=true&q=Hokusai&offset=0&limit=12
+  body: none
+  auth: none
+}
+
+params:query {
+  hasImages: true
+  q: Hokusai
+  offset: 0
+  limit: 12
+}
+
+assert {
+  res.status: eq 200
+  res.body.total: gt 12
+  res.body.objectIDs: length 12
+}
+
+docs {
+  The first page of the default search.
+
+  A search answers with ids, never with objects: `total` is every match,
+  `objectIDs` is this page of them. The app then asks for each id
+  separately (see **Objects**), which is why a batch costs 13 requests.
+
+  `hasImages=true` only promises a photograph exists, not that it may be
+  shown. See **Object without an open-access image**.
+}

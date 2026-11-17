@@ -1,0 +1,25 @@
+meta {
+  name: Departments
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/v1/departments
+  body: none
+  auth: none
+}
+
+assert {
+  res.status: eq 200
+  res.body.departments: isArray
+  res.body.departments[0].departmentId: isNumber
+  res.body.departments[0].displayName: isString
+}
+
+docs {
+  The list behind the department filter. The app asks for it once, when
+  it starts, and keeps it for the visit.
+
+  `departmentId` is what **Inside a department** sends.
+}

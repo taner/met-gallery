@@ -1,0 +1,33 @@
+meta {
+  name: Past the 10,000 result cap
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{baseUrl}}/v1.1/search?hasImages=true&q=french&offset=10000&limit=12
+  body: none
+  auth: none
+}
+
+params:query {
+  hasImages: true
+  q: french
+  offset: 10000
+  limit: 12
+}
+
+assert {
+  res.status: eq 200
+  res.body.total: gt 10000
+  res.body.objectIDs: isNull
+}
+
+docs {
+  `offset + limit` may not exceed 10,000, so only the first 10,000
+  results of any search can be reached. Past that the API still answers
+  200 and still reports the full `total`, with `"objectIDs": null`.
+
+  The app treats a page with no ids as the end of the gallery, whatever
+  `total` claims. Without that it would ask for this page for ever.
+}

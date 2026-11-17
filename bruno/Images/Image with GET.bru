@@ -1,0 +1,41 @@
+meta {
+  name: Image with GET
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{imagesUrl}}/as/web-large/DP251139.jpg
+  body: none
+  auth: none
+}
+
+headers {
+  Origin: http://localhost:8103
+}
+
+assert {
+  res.status: eq 200
+}
+
+tests {
+  test("a GET carries no Access-Control-Allow-Origin header", function () {
+    expect(res.getHeader("access-control-allow-origin")).to.equal(undefined);
+  });
+
+  test("it is a JPEG", function () {
+    expect(res.getHeader("content-type")).to.equal("image/jpeg");
+  });
+}
+
+docs {
+  The picture of object 45734, as its `primaryImageSmall` gives it.
+
+  The response has no `Access-Control-Allow-Origin` header, even with an
+  `Origin` sent. Flutter web draws to a canvas and has to fetch an
+  image's bytes to draw it, which the browser refuses for another origin
+  without that header. So the app shows every picture in a real `<img>`
+  element instead (`ArtworkImage`).
+
+  Compare with **Image with HEAD**.
+}

@@ -1,0 +1,23 @@
+docs {
+  # Met Gallery: the Met Collection API, by hand
+
+  Every request the app makes, plus the odd answers it has to cope with.
+  Each request asserts what the app relies on, so running the collection
+  is a quick check that the API still behaves the way the code assumes.
+
+  Choose the **Met** environment first. Its `baseUrl` is the same address
+  as `COLLECTION_BASE_URL` in the project's `.env`.
+
+  Run everything from this folder:
+
+  ```sh
+  npx @usebruno/cli run --env Met
+  ```
+
+  Go easy on it. The firewall in front of the API allows roughly 80
+  requests a minute per IP address (not the 80 a second the documentation
+  mentions) and answers the rest with a 403. The whole collection is 14
+  requests.
+
+  API documentation: https://metmuseum.github.io/
+}

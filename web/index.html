@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!--
+    Replaced by the value of `--base-href` at build time. Must start and end
+    with a slash.
+  -->
+  <base href="$FLUTTER_BASE_HREF">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Search The Met's open-access collection and browse the results as a gallery.">
+  <meta name="theme-color" content="#fdf9f4" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#141311" media="(prefers-color-scheme: dark)">
+
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Met Gallery">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>Met Gallery</title>
+  <link rel="manifest" href="manifest.json">
+
+  <!--
+    The page behind the canvas, in the app's own surface colours (the values
+    of colorScheme.surface in app_theme.dart). Without this the second or so
+    before Flutter paints is a white flash, which in dark mode is the
+    brightest thing the app ever shows.
+  -->
+  <style>
+    body { margin: 0; background: #fdf9f4; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #141311; }
+    }
+  </style>
+</head>
+<body>
+  <script src="flutter_bootstrap.js" async></script>
+</body>
+</html>

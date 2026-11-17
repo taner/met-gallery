@@ -1,0 +1,31 @@
+meta {
+  name: Object without an open-access image
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/v1/objects/:objectId
+  body: none
+  auth: none
+}
+
+params:path {
+  objectId: 369773
+}
+
+assert {
+  res.status: eq 200
+  res.body.isPublicDomain: eq false
+  res.body.primaryImageSmall: isEmpty
+}
+
+docs {
+  A Picasso, still in copyright. A search with `hasImages=true` returns
+  it all the same, and the record comes back with
+  `"primaryImageSmall": ""`.
+
+  This is ordinary, not an error. The app skips the tile, remembers the
+  answer so the id is never asked about again, and lowers the "of about
+  N" count.
+}

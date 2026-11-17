@@ -1,0 +1,33 @@
+meta {
+  name: Next page
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/v1.1/search?hasImages=true&q=Hokusai&offset=12&limit=12
+  body: none
+  auth: none
+}
+
+params:query {
+  hasImages: true
+  q: Hokusai
+  offset: 12
+  limit: 12
+}
+
+assert {
+  res.status: eq 200
+  res.body.objectIDs: length 12
+}
+
+docs {
+  The second batch: the same search, 12 further in. Paging is by offset,
+  not by cursor. The app's next offset is the number of ids it has had a
+  definite answer about (`PagedArtworks.examined`).
+
+  None of these ids should appear in **Search for a word**. If the
+  collection changes between two loads an offset can repeat a result, so
+  the app drops ids that are already on screen.
+}

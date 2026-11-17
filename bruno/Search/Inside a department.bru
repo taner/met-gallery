@@ -1,0 +1,37 @@
+meta {
+  name: Inside a department
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/v1.1/search?hasImages=true&q=Hokusai&departmentId=6&offset=0&limit=12
+  body: none
+  auth: none
+}
+
+params:query {
+  hasImages: true
+  q: Hokusai
+  departmentId: 6
+  offset: 0
+  limit: 12
+}
+
+assert {
+  res.status: eq 200
+  res.body.total: gt 0
+  res.body.objectIDs: length 12
+}
+
+docs {
+  What the department filter sends. 6 is Asian Art; the ids come from
+  **Departments**.
+
+  `total` is smaller than in **Search for a word**. Try `departmentId=4`
+  (Arms and Armor): `total` is 0 and the app shows "Nothing matches
+  “Hokusai” in Arms and Armor".
+
+  An id the API does not know (`999`, or text) is ignored: it answers as
+  if no department had been sent.
+}

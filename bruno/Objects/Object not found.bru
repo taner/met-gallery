@@ -1,0 +1,26 @@
+meta {
+  name: Object not found
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/v1/objects/:objectId
+  body: none
+  auth: none
+}
+
+params:path {
+  objectId: 999999999
+}
+
+assert {
+  res.status: eq 404
+  res.body.message: eq ObjectID not found
+}
+
+docs {
+  The search index can list an id whose record is gone. A 404 here is
+  the museum's answer about that object: the app skips the tile and does
+  not retry.
+}

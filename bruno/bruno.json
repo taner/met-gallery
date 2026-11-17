@@ -1,0 +1,6 @@
+{
+  "version": "1",
+  "name": "Met Gallery - Met Collection API",
+  "type": "collection",
+  "ignore": ["node_modules", ".git"]
+}

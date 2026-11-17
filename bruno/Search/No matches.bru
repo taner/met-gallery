@@ -1,0 +1,31 @@
+meta {
+  name: No matches
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{baseUrl}}/v1.1/search?hasImages=true&q=zzqxjv&offset=0&limit=12
+  body: none
+  auth: none
+}
+
+params:query {
+  hasImages: true
+  q: zzqxjv
+  offset: 0
+  limit: 12
+}
+
+assert {
+  res.status: eq 200
+  res.body.total: eq 0
+  res.body.objectIDs: isNull
+}
+
+docs {
+  No matches arrive as `"objectIDs": null`, not as an empty list. The
+  documentation gives the default as `[]`.
+
+  The app reads null as an empty page and shows "Nothing matches".
+}

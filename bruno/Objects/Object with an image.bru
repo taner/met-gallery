@@ -1,0 +1,39 @@
+meta {
+  name: Object with an image
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/v1/objects/:objectId
+  body: none
+  auth: none
+}
+
+params:path {
+  objectId: 45734
+}
+
+assert {
+  res.status: eq 200
+  res.body.objectID: eq 45734
+  res.body.primaryImageSmall: startsWith https://images.metmuseum.org/
+  res.body.isPublicDomain: eq true
+  res.body.title: isString
+}
+
+docs {
+  The record behind one tile ("Quail and Millet"). Objects are still on
+  `v1`; there is no `v1.1/objects`.
+
+  The gallery uses `primaryImageSmall`, `title`, `artistDisplayName` (or
+  `culture` when there is no artist), `objectDate`, `medium`,
+  `department` and `objectURL`. `classification` decides whether two
+  records can be the same print.
+
+  Worth trying other ids for the quirks the app absorbs:
+
+  - `544502`: `"constituents": null` where a list is documented.
+  - `57805`: `"tags": null`, and 12 `additionalImages`.
+  - `dimensionsParsed` is documented and is in none of them.
+}

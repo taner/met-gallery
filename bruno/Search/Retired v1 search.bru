@@ -1,0 +1,29 @@
+meta {
+  name: Retired v1 search
+  type: http
+  seq: 7
+}
+
+get {
+  url: {{baseUrl}}/v1/search?hasImages=true&q=Hokusai
+  body: none
+  auth: none
+}
+
+params:query {
+  hasImages: true
+  q: Hokusai
+}
+
+assert {
+  res.status: eq 410
+  res.body.replacement: eq /public/collection/v1.1/search
+}
+
+docs {
+  The endpoint the challenge brief points at. It was retired on
+  2026-10-01 and has answered `410 Gone` since.
+
+  A 410 is an answer, not a blip: the app's retry policy asks once and
+  shows "The museum sent an answer this app couldn't read".
+}
